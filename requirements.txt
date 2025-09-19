@@ -1,0 +1,4 @@
+pandas
+langfuse
+streamlit
+python-dotenv
