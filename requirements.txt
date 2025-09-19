@@ -3,3 +3,6 @@ pandas==2.3.2
 boto3==1.40.34
 langfuse==3.5.0
 python-dotenv==1.1.1
+fsspec
+s3fs
+itables
