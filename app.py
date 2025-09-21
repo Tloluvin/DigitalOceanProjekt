@@ -1,6 +1,7 @@
 import boto3
 import pandas as pd
 import pathlib
+import streamlit as st
 from dotenv import load_dotenv
 
 BUCKET_NAME = "dane-modul9"
@@ -46,3 +47,8 @@ wroclaw_2024_df["Czas"].dropna().unique()[:20]
 print("Test konwersji na timedelta")
 pd.to_timedelta(wroclaw_2023_df["Czas"].dropna().head(10))
 pd.to_timedelta(wroclaw_2023_df["Czas"].dropna().head(10))
+
+
+
+st.set_page_config(page_title="Zadanie z modułu 9", page_icon="📊", layout="wide")
+st.title("Zadanie z modułu 9")
