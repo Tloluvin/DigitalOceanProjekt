@@ -1,8 +1,11 @@
 import streamlit as st
+from itables.streamlit import interactive_table
 
 def show(wroclaw_2023_df, wroclaw_2024_df):
     st.title("Data Overview")
+
     st.subheader("Data 2023")
-    st.dataframe(wroclaw_2023_df)
+    interactive_table(wroclaw_2023_df)
+
     st.subheader("Data 2024")
-    st.dataframe(wroclaw_2024_df)
+    interactive_table(wroclaw_2024_df)
