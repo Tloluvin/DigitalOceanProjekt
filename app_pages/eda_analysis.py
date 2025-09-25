@@ -1,33 +1,37 @@
 import streamlit as st
-import pandas as pd
 from utils import eda_utils
 from itables.streamlit import interactive_table
 
-def show_missing_data(missing: pd.Series):
+
+def show_missing_data(missing):
     if missing.empty:
         st.write("No missing values detected.")
         return
-    
-    # Jeśli missing ma indeks typu int (czyli nie zawiera nazw kolumn), odtwórz kolumnę 'Column'
-    if missing.index.dtype == 'int64':
-        missing_df = pd.DataFrame({
-            "Missing Count": missing.values,
-            "Column": missing.index.astype(str)
-        })[["Column", "Missing Count"]]
-    else:
-        missing_df = missing.reset_index(drop=False)
-        missing_df.columns = ["Column", "Missing Count"]
-    
+
+    missing_df = missing.reset_index(drop=False)
+    missing_df.columns = ["Column", "Missing Count"]
     interactive_table(missing_df)
 
 
 def show(wroclaw_2023_df, wroclaw_2024_df):
     st.title("Exploratory Data Analysis (EDA)")
 
-    for df, year in [(wroclaw_2023_df, 2023), (wroclaw_2024_df, 2024)]:
-        st.header(f"Year {year} - Basic statistics")
-        st.write(eda_utils.basic_statistics(df))  # indeks tutaj zostaje
+    tabs = st.tabs(["Year 2023", "Year 2024"])
 
-        missing = eda_utils.analyze_missing_values(df)
-        st.write(f"Missing values for year {year}:")
-        show_missing_data(missing)  # a tutaj indeks jest resetowany i usuwany
+    with tabs[0]:
+        st.header("Year 2023 - Full analysis")
+        st.subheader("Basic statistics")
+        st.write(eda_utils.basic_statistics(wroclaw_2023_df))
+
+        missing_2023 = eda_utils.analyze_missing_values(wroclaw_2023_df)
+        st.subheader("Missing values")
+        show_missing_data(missing_2023)
+
+    with tabs[1]:
+        st.header("Year 2024 - Full analysis")
+        st.subheader("Basic statistics")
+        st.write(eda_utils.basic_statistics(wroclaw_2024_df))
+
+        missing_2024 = eda_utils.analyze_missing_values(wroclaw_2024_df)
+        st.subheader("Missing values")
+        show_missing_data(missing_2024)
