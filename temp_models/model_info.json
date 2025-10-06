@@ -1,0 +1,16 @@
+{
+    "model_name": "Linear Regression",
+    "features": [
+        "Gender_Numeric",
+        "Wiek",
+        "5 km Tempo",
+        "Tempo Stabilno\u015b\u0107",
+        "Has_Team",
+        "First_5km_Fast"
+    ],
+    "mae": 0.06504123000240626,
+    "rmse": 0.1004500665170317,
+    "r2": 0.9891320190566935,
+    "training_date": "2025-10-05 17:31:44",
+    "training_samples": 14302
+}
