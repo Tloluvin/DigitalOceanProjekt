@@ -180,19 +180,20 @@ def show():
                 max_value=60.0, 
                 value=25.0, 
                 step=0.5,
-                help="Podaj swój ostatni czas na 5km"
+                help="Podaj swój ostatni czas na 5km - to KLUCZOWY wskaźnik (87.7% wpływu na predykcję)"
             )
         
         with col2:
-            has_team = st.selectbox("Czy należysz do drużyny?", ["Nie", "Tak"])
             pace_stability = st.slider(
                 "Stabilność tempa (przewidywana):",
                 min_value=0.0,
                 max_value=0.2,
-                value=0.05,
+                value=0.06,
                 step=0.01,
-                help="0.0 = bardzo stabilne tempo, 0.2 = bardzo niestabilne tempo"
+                help="0.0 = bardzo stabilne tempo, 0.2 = bardzo niestabilne tempo. Domyślnie: 0.06 (mediana)"
             )
+            
+            st.info("💡 Model używa tylko 4 feature'ów:\n- ⭐ 5 km Tempo (87.7%)\n- ✅ Stabilność (11.9%)\n- Wiek (0.3%)\n- Płeć (0.0%)")
         
         # Button predykcji
         if st.button("🚀 Przewiduj czas", type="primary", key="predict_manual"):
@@ -300,15 +301,15 @@ def show():
                     try:
                         # Import modułu LLM
                         from utils.llm_integration import (
-                            extract_runner_data_with_openai,
+                            extract_runner_data_with_gemini,
                             validate_extracted_data,
                             convert_to_model_input,
                             log_prediction_to_langfuse
                         )
                         
-                        with st.spinner("🤖 Analizuję tekst za pomocą AI..."):
+                        with st.spinner("🤖 Analizuję tekst za pomocą Google Gemini..."):
                             # Ekstrakcja danych
-                            extraction_result = extract_runner_data_with_openai(user_text)
+                            extraction_result = extract_runner_data_with_gemini(user_text)
                         
                         if not extraction_result['success']:
                             st.error(f"❌ Błąd ekstrakcji: {extraction_result['error']}")
@@ -337,7 +338,7 @@ def show():
                                 if extracted_data.get('has_team') is not None:
                                     st.info(f"🏃‍♂️ Klub: {'Tak' if extracted_data['has_team'] else 'Nie'}")
                                 
-                                st.caption(f"🔢 Użyto {extraction_result.get('tokens_used', 'N/A')} tokenów")
+                                st.caption(f"🤖 Model: Google Gemini 1.5 Flash | Tokeny: ~{extraction_result.get('tokens_used', 'N/A')}")
                             
                             # Walidacja danych
                             validation = validate_extracted_data(extracted_data)

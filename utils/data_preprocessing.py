@@ -125,13 +125,11 @@ def _create_features(df: pd.DataFrame) -> pd.DataFrame:
     # 5. Binary encoding płci (0 = K, 1 = M)
     df['Gender_Numeric'] = (df['Płeć'] == 'M').astype(int)
     
-    # 6. Wskaźnik doświadczenia - czy uczestnik należy do drużyny
-    df['Has_Team'] = df['Drużyna'].notna().astype(int)
+    # USUNIĘTE FEATURE'Y (nieużywane w modelu):
+    # - Has_Team (redundantny, 0.04% importance)
+    # - First_5km_Fast (korelacja -0.786 z 5 km Tempo)
     
-    # 7. Tempo na pierwszych 5km jako wskaźnik przygotowania
-    df['First_5km_Fast'] = (df['5 km Tempo'] < df['5 km Tempo'].median()).astype(int)
-    
-    # 8. Stabilność kategoryczna
+    # 6. Stabilność kategoryczna (opcjonalna, do wizualizacji)
     if 'Tempo Stabilność' in df.columns:
         df['Stability_Category'] = pd.cut(
             df['Tempo Stabilność'], 

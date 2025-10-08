@@ -36,20 +36,22 @@ Wyekstrahuj następujące informacje z tekstu:
 1. Płeć (gender): "M" dla mężczyzny, "K" dla kobiety
 2. Wiek (age): liczba całkowita
 3. Czas na 5km w minutach (time_5km_minutes): liczba zmiennoprzecinkowa
-4. Czy należy do klubu/drużyny (has_team): true lub false
 
 ZASADY:
 - Jeśli jakiejś informacji brak, ustaw wartość null
 - Zwróć TYLKO poprawny JSON bez dodatkowego tekstu
-- Format: {{"gender": "M/K/null", "age": number/null, "time_5km_minutes": number/null, "has_team": true/false/null}}
+- Format: {{"gender": "M/K/null", "age": number/null, "time_5km_minutes": number/null}}
 
 PRZYKŁADY:
 
 Input: "Cześć, mam 32 lata, jestem mężczyzną i ostatnio przebiegłem 5km w 24 minuty"
-Output: {{"gender": "M", "age": 32, "time_5km_minutes": 24.0, "has_team": null}}
+Output: {{"gender": "M", "age": 32, "time_5km_minutes": 24.0}}
 
-Input: "Jestem kobietą, mam 28 lat, biegam 5km w około 30 minut i należę do klubu biegowego"
-Output: {{"gender": "K", "age": 28, "time_5km_minutes": 30.0, "has_team": true}}
+Input: "Jestem kobietą, mam 28 lat, biegam 5km w około 30 minut"
+Output: {{"gender": "K", "age": 28, "time_5km_minutes": 30.0}}
+
+Input: "Mam 45 lat, mój ostatni czas na 5 km to 27 minut"
+Output: {{"gender": null, "age": 45, "time_5km_minutes": 27.0}}
 
 Teraz wyekstrahuj dane z podanego opisu użytkownika.
 """
@@ -210,13 +212,12 @@ def convert_to_model_input(extracted_data: Dict) -> Dict:
     
     tempo_5km = extracted_data['time_5km_minutes'] / 5.0
     
+    # ZOPTYMALIZOWANY MODEL - tylko 4 feature'y
     model_input = {
         'Gender_Numeric': 1 if extracted_data['gender'] == 'M' else 0,
         'Wiek': int(extracted_data['age']),
-        '5 km Tempo': tempo_5km,
-        'Tempo Stabilność': 0.06,  # Domyślna wartość (mediana)
-        'Has_Team': 1 if extracted_data.get('has_team') == True else 0,
-        'First_5km_Fast': 1 if tempo_5km < 5.0 else 0
+        '5 km Tempo': tempo_5km,  # KLUCZOWY feature (87.7% importance)
+        'Tempo Stabilność': 0.06,  # Domyślna wartość (mediana, 11.9% importance)
     }
     
     return model_input
