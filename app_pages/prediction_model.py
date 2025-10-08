@@ -204,9 +204,7 @@ def show():
                 'Gender_Numeric': 1 if gender == "Mężczyzna" else 0,
                 'Wiek': age,
                 '5 km Tempo': tempo_5km,
-                'Tempo Stabilność': pace_stability,
-                'Has_Team': 1 if has_team == "Tak" else 0,
-                'First_5km_Fast': 1 if tempo_5km < 5.0 else 0  # Arbitralnie: <5 min/km = szybki
+                'Tempo Stabilność': pace_stability
             }
             
             # Predykcja

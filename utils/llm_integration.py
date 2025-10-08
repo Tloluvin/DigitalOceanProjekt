@@ -4,7 +4,7 @@ from typing import Dict, Optional
 from dotenv import load_dotenv
 import google.generativeai as genai
 from langfuse import Langfuse
-from langfuse.decorators import observe, langfuse_context
+from langfuse import observe, langfuse_context
 
 # Załadowanie zmiennych środowiskowych
 load_dotenv()
