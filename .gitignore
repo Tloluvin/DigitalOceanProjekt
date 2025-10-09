@@ -3,3 +3,5 @@ data/
 testy/
 __pycache__/
 *.pyc
+**/temp*/
+temp*
