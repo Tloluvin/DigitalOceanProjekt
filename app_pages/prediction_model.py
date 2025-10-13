@@ -127,7 +127,7 @@ def show():
     st.success(f"✅ Model załadowany: **{model_info['model_name']}**")
 
     # Tab: Manual Input
-    input_tabs = st.tabs(["📝 Formularz", "💬 Opis tekstowy (LLM)"])
+    input_tabs = st.tabs(["📝 Użyj formularza", "💬 Opisz siebie AI", "📊 Wyniki trenowania modelu"])
     with input_tabs[0]:
         st.subheader("Wprowadź dane zawodnika")
         col1, col2 = st.columns(2)
@@ -196,3 +196,9 @@ def show():
                                     col3.metric("Dystans", f"{21.0975:.2f} km")
                     except Exception as e:
                         st.error(f"❌ Nieoczekiwany błąd: {e}")
+
+    # Tab: Wyniki trenowania
+    with input_tabs[2]:
+        from app_pages import training_results
+        training_results.show()
+
