@@ -405,20 +405,3 @@ def show(wroclaw_2023_df, wroclaw_2024_df):
         
         else:
             st.error(f"❌ Zmienna '{variable}' nie istnieje w danych")
-    
-    st.markdown("---")
-    st.markdown("### 📝 Podsumowanie EDA")
-    st.info("""
-    **Co dalej?**
-    
-    1. ✅ Przeanalizowaliśmy jakość danych i zidentyfikowaliśmy braki
-    2. ✅ Zbadaliśmy rozkłady kluczowych zmiennych
-    3. ✅ Przeanalizowaliśmy demografię uczestników
-    4. ✅ Oceniliśmy wydajność i stabilność tempa
-    5. ✅ Wykryliśmy potencjalne outliery
-    
-    **Następne kroki:**
-    - Oczyszczenie danych (usunięcie/imputacja braków, obsługa outlierów)
-    - Feature engineering (tworzenie nowych zmiennych)
-    - Budowa modelu predykcyjnego
-    """)

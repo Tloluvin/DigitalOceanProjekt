@@ -210,12 +210,3 @@ def show():
         - Model można wykorzystać do personalizowania planów biegowych
         """)
 
-    st.markdown("---")
-
-    st.info("""
-    **Jak interpretować te wyniki?**
-
-    Wizualizacje pozwalają szybko zrozumieć, które cechy decydują o czasie biegu
-    oraz jak dokładne są predykcje modelu.  
-    Wyniki mogą być użyte w raportach, prezentacjach lub do dalszej optymalizacji modelu.
-    """)
